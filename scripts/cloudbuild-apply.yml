@@ -1,0 +1,92 @@
+timeout: 3600s
+logsBucket: ${_LOGS_BUCKET}
+
+options:
+  logging: GCS_ONLY
+
+steps:
+  - id: validate-inputs
+    name: gcr.io/google.com/cloudsdktool/cloud-sdk:532.0.0-slim
+    entrypoint: sh
+    args:
+      - -ceu
+      - |
+        test -n "${_REPOSITORY_OWNER}"
+        test -n "${_REPOSITORY_NAME}"
+        test -n "${_TERRAFORM_DIRECTORY}"
+        test -n "${_TARGET_PROJECT_ID}"
+        test -n "${_TARGET_SERVICE_ACCOUNT}"
+        test -d "/workspace/${_TERRAFORM_DIRECTORY}"
+        printf 'Applying %s/%s in %s for project %s on branch %s\n' \
+          "${_REPOSITORY_OWNER}" \
+          "${_REPOSITORY_NAME}" \
+          "${_TERRAFORM_DIRECTORY}" \
+          "${_TARGET_PROJECT_ID}" \
+          "${BRANCH_NAME:-unknown}"
+
+  - id: terraform-apply
+    name: hashicorp/terraform:1.14.3
+    entrypoint: sh
+    env:
+      - TF_IN_AUTOMATION=1
+      - GOOGLE_PROJECT=${_TARGET_PROJECT_ID}
+      - GOOGLE_CLOUD_PROJECT=${_TARGET_PROJECT_ID}
+      - CLOUDSDK_CORE_PROJECT=${_TARGET_PROJECT_ID}
+    args:
+      - -ceu
+      - |
+        workdir="/workspace/${_TERRAFORM_DIRECTORY}"
+        artifact_dir="/workspace/.apply-artifacts/${_REPOSITORY_OWNER}/${_REPOSITORY_NAME}/${_ENVIRONMENT}/${SHORT_SHA}"
+
+        mkdir -p "${artifact_dir}"
+        cd "${workdir}"
+
+        if [ "${_TARGET_SERVICE_ACCOUNT}" != "${_HOST_SERVICE_ACCOUNT}" ]; then
+          export GOOGLE_IMPERSONATE_SERVICE_ACCOUNT="${_TARGET_SERVICE_ACCOUNT}"
+          export CLOUDSDK_AUTH_IMPERSONATE_SERVICE_ACCOUNT="${_TARGET_SERVICE_ACCOUNT}"
+          set -- terraform init -input=false -backend-config="impersonate_service_account=${_TARGET_SERVICE_ACCOUNT}"
+        else
+          unset GOOGLE_IMPERSONATE_SERVICE_ACCOUNT
+          unset CLOUDSDK_AUTH_IMPERSONATE_SERVICE_ACCOUNT
+          set -- terraform init -input=false
+        fi
+
+        if [ -n "${_STATE_BUCKET_NAME}" ]; then
+          set -- "$@" -backend-config="bucket=${_STATE_BUCKET_NAME}"
+        fi
+        if [ -n "${_STATE_BUCKET_PREFIX}" ]; then
+          set -- "$@" -backend-config="prefix=${_STATE_BUCKET_PREFIX}"
+        fi
+        "$@"
+
+        terraform validate
+        terraform plan -input=false -out="${artifact_dir}/tfapply.binary"
+        terraform show -no-color "${artifact_dir}/tfapply.binary" > "${artifact_dir}/tfapply.txt"
+        terraform apply -input=false "${artifact_dir}/tfapply.binary"
+
+        cat > "${artifact_dir}/metadata.env" <<EOF
+        REPOSITORY_OWNER=${_REPOSITORY_OWNER}
+        REPOSITORY_NAME=${_REPOSITORY_NAME}
+        TERRAFORM_DIRECTORY=${_TERRAFORM_DIRECTORY}
+        TARGET_PROJECT_ID=${_TARGET_PROJECT_ID}
+        TARGET_SERVICE_ACCOUNT=${_TARGET_SERVICE_ACCOUNT}
+        BRANCH_NAME=${BRANCH_NAME}
+        COMMIT_SHA=${COMMIT_SHA}
+        SHORT_SHA=${SHORT_SHA}
+        ENVIRONMENT=${_ENVIRONMENT}
+        EOF
+
+        printf 'Applied approved plan for %s/%s\n' "${_REPOSITORY_OWNER}" "${_REPOSITORY_NAME}"
+
+  - id: publish-apply-artifacts
+    name: gcr.io/google.com/cloudsdktool/cloud-sdk:532.0.0-slim
+    entrypoint: sh
+    args:
+      - -ceu
+      - |
+        artifact_root="/workspace/.apply-artifacts/${_REPOSITORY_OWNER}/${_REPOSITORY_NAME}/${_ENVIRONMENT}/${SHORT_SHA}"
+        destination="gs://${_PLAN_ARTIFACTS_BUCKET}/${_REPOSITORY_OWNER}/${_REPOSITORY_NAME}/${_ENVIRONMENT}/${SHORT_SHA}/apply/"
+
+        test -d "${artifact_root}"
+        gcloud storage cp --recursive "${artifact_root}" "${destination}"
+        printf 'Published apply records to %s\n' "${destination}"

@@ -1,0 +1,39 @@
+version: 2
+
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "tuesday"
+      time: "07:00"
+      timezone: "Europe/London"
+    labels:
+      - "automation"
+      - "github-action"
+    commit-message:
+      prefix: "chore"
+    groups:
+      all-github-actions:
+        patterns:
+          - "*"
+  - package-ecosystem: "terraform"
+    directories:
+      - "/terraform/01_sandbox"
+      - "/terraform/02_dev_nonprod"
+      - "/terraform/03_stg_prod"
+      - "/terraform/04_prd_prod"
+    schedule:
+      interval: "weekly"
+      day: "tuesday"
+      time: "07:00"
+      timezone: "Europe/London"
+    groups:
+      terraform-all:
+        patterns:
+          - "*"
+    labels:
+      - "automation"
+      - "terraform"
+    commit-message:
+      prefix: "chore(terraform)"

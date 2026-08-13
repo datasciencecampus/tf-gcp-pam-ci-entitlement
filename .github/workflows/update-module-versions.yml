@@ -1,0 +1,16 @@
+name: Update Terraform module versions
+
+on:
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  placeholder:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Refuse to run on main
+        run: |
+          echo "This workflow is a discovery stub on the default branch."
+          echo "Run the feature branch version from the Actions UI branch selector."
+          exit 1
