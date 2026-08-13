@@ -17,6 +17,26 @@ resource "google_project_iam_member" "pam_service_agent" {
   member  = "serviceAccount:service-org-${var.org_id}@gcp-sa-pam.iam.gserviceaccount.com"
 }
 
+# https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/project_iam_custom_role
+resource "google_project_iam_custom_role" "target_sa_pam_grants_manager" {
+  project     = var.project_id
+  role_id     = var.target_sa_pam_grants_role_id
+  title       = "PAM Grants Manager"
+  description = "Least-privilege role for CI target service account PAM grant lifecycle actions"
+  permissions = [
+    "privilegedaccessmanager.grants.create",
+    "privilegedaccessmanager.grants.get",
+    "privilegedaccessmanager.grants.revoke",
+  ]
+}
+
+# https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/project_iam
+resource "google_project_iam_member" "target_sa_pam_grants_manager" {
+  project = var.project_id
+  role    = google_project_iam_custom_role.target_sa_pam_grants_manager.name
+  member  = "serviceAccount:${var.target_service_account_email}"
+}
+
 # https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/privileged_access_manager_entitlement
 resource "google_privileged_access_manager_entitlement" "terraform_apply" {
   entitlement_id       = var.ci_pam_entitlement_id

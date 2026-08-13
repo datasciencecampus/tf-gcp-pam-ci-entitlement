@@ -24,6 +24,16 @@ variable "target_service_account_email" {
   }
 }
 
+variable "target_sa_pam_grants_role_id" {
+  description = "Role ID for the project-level custom IAM role granting PAM grant lifecycle actions to the target service account."
+  type        = string
+  default     = "pamGrantsManager"
+  validation {
+    condition     = can(regex("^[a-zA-Z0-9_]{3,64}$", var.target_sa_pam_grants_role_id))
+    error_message = "target_sa_pam_grants_role_id must be 3-64 characters using letters, numbers, or underscore."
+  }
+}
+
 variable "ci_pam_entitlement_id" {
   description = "ID for the PAM entitlement. Must be unique within the project location."
   type        = string
