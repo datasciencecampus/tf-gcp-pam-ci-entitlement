@@ -94,10 +94,7 @@ No modules.
 
 ## Notes
 
-- Environment usage, assurance expectations, and data handling guidance are described in [docs/environment-guidance.md](docs/environment-guidance.md).
-- An empty `ci_pam_approver_principals` list enables auto-approval. This is only appropriate for sandbox environments.
-- The `ci_pam_entitlement_name` output should be set as the `_PAM_ENTITLEMENT_NAME` substitution variable in the Cloud Build trigger.
-- The target service account is assigned a project-level custom role with only the following PAM grant permissions:
+- Environment usage, assurance expectations, and data handling guidance are described in this README.
   - `privilegedaccessmanager.grants.create`
   - `privilegedaccessmanager.grants.get`
   - `privilegedaccessmanager.grants.revoke`
