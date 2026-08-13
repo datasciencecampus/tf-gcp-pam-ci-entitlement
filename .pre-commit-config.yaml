@@ -45,54 +45,27 @@ repos:
     rev: "4025989e4fd50bb33592d7a3a4cfb3b46de9367a"  # frozen: v0.24.0
     hooks:
       - id: terraform-docs-go
-        name: terraform-docs (sandbox)
+        name: terraform-docs (module)
         language_version: "1.25.0"
         args:
           - "markdown"
           - "table"
           - "--output-file"
           - "README.md"
-          - "terraform/01_sandbox"
-      - id: terraform-docs-go
-        name: terraform-docs (dev_nonprod)
-        language_version: "1.25.0"
-        args:
-          - "markdown"
-          - "table"
-          - "--output-file"
-          - "README.md"
-          - "terraform/02_dev_nonprod"
-      - id: terraform-docs-go
-        name: terraform-docs (stg_prod)
-        language_version: "1.25.0"
-        args:
-          - "markdown"
-          - "table"
-          - "--output-file"
-          - "README.md"
-          - "terraform/03_stg_prod"
-      - id: terraform-docs-go
-        name: terraform-docs (prd_prod)
-        language_version: "1.25.0"
-        args:
-          - "markdown"
-          - "table"
-          - "--output-file"
-          - "README.md"
-          - "terraform/04_prd_prod"
-      - id: terraform-docs-go
-        name: terraform-docs (modules)
-        language_version: "1.25.0"
-        args:
-          - "markdown"
-          - "table"
-          - "--recursive"
-          - "--recursive-include-main=false"
-          - "--recursive-path"
+          - "--output-mode"
+          - "inject"
           - "."
+      - id: terraform-docs-go
+        name: terraform-docs (examples/minimal)
+        language_version: "1.25.0"
+        args:
+          - "markdown"
+          - "table"
           - "--output-file"
           - "README.md"
-          - "terraform/modules"
+          - "--output-mode"
+          - "inject"
+          - "examples/minimal"
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: 7c55798a78262d14b2074abf623d8a992ebb70d4  # frozen: v0.16.2
