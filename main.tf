@@ -1,3 +1,15 @@
+# https://registry.terraform.io/providers/hashicorp/terraform/latest/docs/language/terraform
+terraform {
+  required_version = ">= 1.0"
+
+  required_providers {
+    google = {
+      source  = "hashicorp/google"
+      version = ">= 5.0"
+    }
+  }
+}
+
 # https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/project_iam
 resource "google_project_iam_member" "pam_service_agent" {
   project = var.project_id
