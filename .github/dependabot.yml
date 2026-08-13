@@ -12,17 +12,15 @@ updates:
       - "automation"
       - "github-action"
     commit-message:
-      prefix: "chore"
+      prefix: "chore(github-actions)"
     groups:
       all-github-actions:
         patterns:
           - "*"
   - package-ecosystem: "terraform"
     directories:
-      - "/terraform/01_sandbox"
-      - "/terraform/02_dev_nonprod"
-      - "/terraform/03_stg_prod"
-      - "/terraform/04_prd_prod"
+      - "/"
+      - "/examples/minimal"
     schedule:
       interval: "weekly"
       day: "tuesday"
