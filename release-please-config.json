@@ -1,0 +1,26 @@
+{
+  "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json",
+  "release-type": "simple",
+  "bump-minor-pre-major": true,
+  "bump-patch-for-minor-pre-major": true,
+  "packages": {
+    ".": {
+      "package-name": "tf-gcp-pam-ci-entitlement",
+      "changelog-path": "CHANGELOG.md",
+      "include-v-in-tag": true,
+      "extra-files": [
+        "version.txt"
+      ],
+      "changelog-sections": [
+        { "type": "feat",     "section": "Features",          "hidden": false },
+        { "type": "fix",      "section": "Bug Fixes",         "hidden": false },
+        { "type": "security", "section": "Security",          "hidden": false },
+        { "type": "docs",     "section": "Documentation",     "hidden": false },
+        { "type": "refactor", "section": "Refactoring",       "hidden": false },
+        { "type": "chore",    "section": "Maintenance",       "hidden": true  },
+        { "type": "ci",       "section": "CI/CD",             "hidden": true  },
+        { "type": "test",     "section": "Tests",             "hidden": true  }
+      ]
+    }
+  }
+}
