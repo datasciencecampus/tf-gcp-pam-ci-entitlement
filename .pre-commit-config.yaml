@@ -23,7 +23,7 @@ repos:
       - id: terraform_tflint
 
   - repo: https://github.com/bridgecrewio/checkov.git
-    rev: 27f879342227f385ce1dbd619155f9aaed9d3cb4  # frozen: 3.3.9
+    rev: fb3e4ed6d57555820dbf7b1b02744a356333e2f1  # frozen: 3.3.10
     hooks:
       - id: checkov
         args: [--config-file, ./configs/checkov.yml]
@@ -66,6 +66,12 @@ repos:
           - "--output-mode"
           - "inject"
           - "examples/minimal"
+
+  - repo: https://github.com/compilerla/conventional-pre-commit
+    rev: 3db014c16a9d31997ab8c07a4d61fcce936c8f0d  # frozen: v4.4.0
+    hooks:
+      - id: conventional-pre-commit
+        stages: [commit-msg]
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: 7c55798a78262d14b2074abf623d8a992ebb70d4  # frozen: v0.16.2
