@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.2.0](https://github.com/datasciencecampus/tf-gcp-pam-ci-entitlement/compare/tf-gcp-pam-ci-entitlement-v1.1.0...tf-gcp-pam-ci-entitlement-v1.2.0) (2026-08-14)
+
+
+### Features
+
+* add .terraform.lock.hcl file for Google provider version management ([148c76c](https://github.com/datasciencecampus/tf-gcp-pam-ci-entitlement/commit/148c76c0305217739a7acfbbc2aafb281b49d4f4))
+* add 'privilegedaccessmanager.grants.list' permission to PAM Grants Manager role ([40841d6](https://github.com/datasciencecampus/tf-gcp-pam-ci-entitlement/commit/40841d6cc2fd635dac8e278154f2cceefa3e39b2))
+* add target service account PAM grants custom role output to README and outputs.tf ([915b897](https://github.com/datasciencecampus/tf-gcp-pam-ci-entitlement/commit/915b897b1320ab97d012697475781982907e123e))
+* enhance Copilot instructions for Terraform module best practices and validation ([162cfd5](https://github.com/datasciencecampus/tf-gcp-pam-ci-entitlement/commit/162cfd5f92c6e5e20ce2caeacb39debb0c0d32c0))
+
 ## [1.1.0](https://github.com/datasciencecampus/tf-gcp-pam-ci-entitlement/compare/tf-gcp-pam-ci-entitlement-v1.0.0...tf-gcp-pam-ci-entitlement-v1.1.0) (2026-08-14)
 
 
