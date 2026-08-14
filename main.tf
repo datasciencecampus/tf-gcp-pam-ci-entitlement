@@ -70,6 +70,13 @@ resource "google_privileged_access_manager_entitlement" "terraform_apply" {
     unstructured {}
   }
 
+  dynamic "additional_notification_targets" {
+    for_each = length(var.ci_pam_admin_notification_email_recipients) > 0 ? [1] : []
+    content {
+      admin_email_recipients = var.ci_pam_admin_notification_email_recipients
+    }
+  }
+
   dynamic "approval_workflow" {
     for_each = length(var.ci_pam_approver_principals) > 0 ? [1] : []
     content {
