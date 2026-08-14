@@ -33,4 +33,5 @@ No resources.
 | Name | Description |
 | ---- | ----------- |
 | <a name="output_ci_pam_entitlement_name"></a> [ci\_pam\_entitlement\_name](#output\_ci\_pam\_entitlement\_name) | Fully-qualified PAM entitlement name. |
+| <a name="output_target_sa_pam_grants_custom_role_name"></a> [target\_sa\_pam\_grants\_custom\_role\_name](#output\_target\_sa\_pam\_grants\_custom\_role\_name) | Fully-qualified project custom role name for PAM grant lifecycle actions. |
 <!-- END_TF_DOCS -->
