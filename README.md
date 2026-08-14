@@ -27,6 +27,11 @@ module "ci_pam_entitlement" {
     "roles/editor",
   ]
 
+  # Optional: notify a central mailbox when grants are approved and activated
+  ci_pam_admin_notification_email_recipients = [
+    "pam-alerts@example.invalid",
+  ]
+
   # Optional: require human approval before granting elevated access
   ci_pam_approver_principals = [
     "group:platform-team@example.gov.uk",
@@ -74,6 +79,7 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 | ---- | ----------- | ---- | ------- | :------: |
+| <a name="input_ci_pam_admin_notification_email_recipients"></a> [ci\_pam\_admin\_notification\_email\_recipients](#input\_ci\_pam\_admin\_notification\_email\_recipients) | Additional email recipients to notify when PAM grants are approved and activated. Use for central mailbox routing (e.g. 'pam-alerts@example.gov.uk'). | `list(string)` | `[]` | no |
 | <a name="input_ci_pam_approver_principals"></a> [ci\_pam\_approver\_principals](#input\_ci\_pam\_approver\_principals) | Google identity principals authorised to approve PAM grants (e.g. 'user:engineer@example.gov.uk', 'group:platform-team@example.gov.uk'). An empty list enables auto-approval; suitable for sandbox environments only. | `list(string)` | `[]` | no |
 | <a name="input_ci_pam_elevated_roles"></a> [ci\_pam\_elevated\_roles](#input\_ci\_pam\_elevated\_roles) | IAM roles to make available via JIT elevation. These are the write/admin roles removed from permanent assignment on the target service account. | `list(string)` | n/a | yes |
 | <a name="input_ci_pam_entitlement_id"></a> [ci\_pam\_entitlement\_id](#input\_ci\_pam\_entitlement\_id) | ID for the PAM entitlement. Must be unique within the project location. | `string` | `"ci-terraform-apply"` | no |

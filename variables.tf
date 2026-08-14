@@ -60,6 +60,20 @@ variable "ci_pam_approver_principals" {
   default     = []
 }
 
+variable "ci_pam_admin_notification_email_recipients" {
+  description = "Additional email recipients to notify when PAM grants are approved and activated. Use for central mailbox routing (e.g. 'pam-alerts@example.gov.uk')."
+  type        = list(string)
+  nullable    = false
+  default     = []
+  validation {
+    condition = alltrue([
+      for addr in var.ci_pam_admin_notification_email_recipients :
+      can(regex("^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$", addr))
+    ])
+    error_message = "Each entry in ci_pam_admin_notification_email_recipients must be a valid email address."
+  }
+}
+
 variable "ci_pam_max_grant_duration" {
   description = "Maximum duration for a PAM grant in seconds notation (e.g. '7200s'). Should cover the worst-case apply runtime; the grant is revoked programmatically on build completion."
   type        = string
