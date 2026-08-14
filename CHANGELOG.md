@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.3.0](https://github.com/datasciencecampus/tf-gcp-pam-ci-entitlement/compare/tf-gcp-pam-ci-entitlement-v1.2.0...tf-gcp-pam-ci-entitlement-v1.3.0) (2026-08-14)
+
+
+### Features
+
+* refine PAM custom role and update descriptions for grant operations ([5807da3](https://github.com/datasciencecampus/tf-gcp-pam-ci-entitlement/commit/5807da3b64757f1a2eeb3718fb9d2cbb66fad7db))
+* update descriptions and permissions for PAM entitlement management roles ([2bca0d0](https://github.com/datasciencecampus/tf-gcp-pam-ci-entitlement/commit/2bca0d0aafd33b85545306584ab03d8d50eccb03))
+* Update PAM entitlement management roles with least-privilege permissions ([0e5a4d1](https://github.com/datasciencecampus/tf-gcp-pam-ci-entitlement/commit/0e5a4d10475cfcb9e46fd734d478279f500f285f))
+
 ## [1.2.0](https://github.com/datasciencecampus/tf-gcp-pam-ci-entitlement/compare/tf-gcp-pam-ci-entitlement-v1.1.0...tf-gcp-pam-ci-entitlement-v1.2.0) (2026-08-14)
 
 
