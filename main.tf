@@ -24,8 +24,8 @@ resource "google_project_iam_custom_role" "target_sa_pam_grants_manager" {
   title       = "PAM Grants Manager"
   description = "Least-privilege role for CI target service account PAM grant lifecycle actions"
   permissions = [
-    "privilegedaccessmanager.grants.create",
     "privilegedaccessmanager.grants.get",
+    "privilegedaccessmanager.grants.list",
     "privilegedaccessmanager.grants.revoke",
   ]
 }
