@@ -95,6 +95,6 @@ No modules.
 ## Notes
 
 - Environment usage, assurance expectations, and data handling guidance are described in this README.
-  - `privilegedaccessmanager.grants.create`
   - `privilegedaccessmanager.grants.get`
+  - `privilegedaccessmanager.grants.list`
   - `privilegedaccessmanager.grants.revoke`
