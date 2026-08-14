@@ -25,7 +25,7 @@ variable "target_service_account_email" {
 }
 
 variable "target_sa_pam_grants_role_id" {
-  description = "Role ID for the project-level custom IAM role granting PAM grant lifecycle actions to the target service account."
+  description = "Role ID for the project-level custom IAM role granting PAM grant request, read, and revoke operations to the target service account."
   type        = string
   default     = "pamGrantsManager"
   validation {
