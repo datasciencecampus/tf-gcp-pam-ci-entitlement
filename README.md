@@ -10,7 +10,7 @@ This is intended for CI pipelines (e.g. Cloud Build) that require short-lived, a
 2. The nominated CI service account is the only eligible requester.
 3. Elevated roles are granted for the duration of the build and revoked on completion.
 4. An optional approval step can be added for higher-assurance environments.
-5. A project-level custom role is created and assigned to the target service account, granting least-privilege PAM entitlement management and grant lifecycle actions.
+5. A project-level custom role is created and assigned to the target service account, scoped to PAM grant request, read, and revoke operations only.
 
 ## Usage
 
@@ -81,7 +81,7 @@ No modules.
 | <a name="input_ci_pam_require_approver_justification"></a> [ci\_pam\_require\_approver\_justification](#input\_ci\_pam\_require\_approver\_justification) | Whether approvers must supply a written justification when approving a PAM grant. | `bool` | `true` | no |
 | <a name="input_org_id"></a> [org\_id](#input\_org\_id) | Numeric Google Cloud organisation ID. Used to construct the PAM service agent identity. | `string` | n/a | yes |
 | <a name="input_project_id"></a> [project\_id](#input\_project\_id) | Google Cloud project ID for the environment. | `string` | n/a | yes |
-| <a name="input_target_sa_pam_grants_role_id"></a> [target\_sa\_pam\_grants\_role\_id](#input\_target\_sa\_pam\_grants\_role\_id) | Role ID for the project-level custom IAM role granting PAM entitlement management and grant lifecycle actions to the target service account. | `string` | `"pamGrantsManager"` | no |
+| <a name="input_target_sa_pam_grants_role_id"></a> [target\_sa\_pam\_grants\_role\_id](#input\_target\_sa\_pam\_grants\_role\_id) | Role ID for the project-level custom IAM role granting PAM grant request, read, and revoke operations to the target service account. | `string` | `"pamGrantsManager"` | no |
 | <a name="input_target_service_account_email"></a> [target\_service\_account\_email](#input\_target\_service\_account\_email) | Email address of the target Terraform service account. This SA will be the eligible requester for JIT grants. | `string` | n/a | yes |
 
 ## Outputs
@@ -89,20 +89,17 @@ No modules.
 | Name | Description |
 | ---- | ----------- |
 | <a name="output_ci_pam_entitlement_name"></a> [ci\_pam\_entitlement\_name](#output\_ci\_pam\_entitlement\_name) | Fully-qualified PAM entitlement name. Set this as the \_PAM\_ENTITLEMENT\_NAME substitution variable in the Cloud Build apply trigger. |
-| <a name="output_target_sa_pam_grants_custom_role_name"></a> [target\_sa\_pam\_grants\_custom\_role\_name](#output\_target\_sa\_pam\_grants\_custom\_role\_name) | Fully-qualified project custom role name that grants PAM entitlement management and grant lifecycle actions to the target service account. |
+| <a name="output_target_sa_pam_grants_custom_role_name"></a> [target\_sa\_pam\_grants\_custom\_role\_name](#output\_target\_sa\_pam\_grants\_custom\_role\_name) | Fully-qualified project custom role name that grants PAM grant request, read, and revoke operations to the target service account. |
 <!-- END_TF_DOCS -->
 
 ## Notes
 
-- The custom IAM role assigned to the target service account grants the following least-privilege permissions:
-  - `privilegedaccessmanager.entitlements.create`
+- The custom IAM role assigned to the target service account is scoped to grant request, read, and revoke operations only:
   - `privilegedaccessmanager.entitlements.get`
   - `privilegedaccessmanager.entitlements.list`
-  - `privilegedaccessmanager.entitlements.update`
   - `privilegedaccessmanager.grants.get`
   - `privilegedaccessmanager.grants.list`
   - `privilegedaccessmanager.grants.revoke`
-  - `privilegedaccessmanager.operations.get`
-  - `privilegedaccessmanager.operations.list`
-- The `entitlements.*` permissions allow the CI service account to manage the PAM entitlement via Terraform. The `operations.*` permissions are required for Terraform to poll long-running PAM operations to completion.
-- `privilegedaccessmanager.entitlements.delete` and `privilegedaccessmanager.entitlements.setIamPolicy` are deliberately excluded. If `terraform destroy` is required, `delete` must be added explicitly with justification.
+- `privilegedaccessmanager.entitlements.create`, `entitlements.update`, and `operations.*` are deliberately **not** granted to the target service account. The target SA is also configured as the eligible grant requester; granting it entitlement write permissions would collapse the privilege boundary, allowing it to redefine its own entitlement with broader roles or weaker approval requirements.
+- Entitlement management (create, update) must remain with a separate control-plane identity. The identity running this Terraform module requires `privilegedaccessmanager.entitlements.create`, `privilegedaccessmanager.entitlements.update`, and `privilegedaccessmanager.operations.*`, which can be satisfied by `roles/privilegedaccessmanager.admin` or a dedicated custom role on the control-plane SA.
+- `privilegedaccessmanager.entitlements.delete` and `privilegedaccessmanager.entitlements.setIamPolicy` are excluded from both roles. Add `delete` explicitly if `terraform destroy` is required, with documented justification.

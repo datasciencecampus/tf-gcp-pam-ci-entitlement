@@ -21,18 +21,14 @@ resource "google_project_iam_member" "pam_service_agent" {
 resource "google_project_iam_custom_role" "target_sa_pam_grants_manager" {
   project     = var.project_id
   role_id     = var.target_sa_pam_grants_role_id
-  title       = "PAM Grants Manager"
-  description = "Least-privilege role for CI target service account PAM entitlement management and grant lifecycle actions"
+  title       = "PAM Grant Requester"
+  description = "Least-privilege role for CI target service account PAM grant request, read, and revoke operations. Entitlement management must remain with a separate control-plane identity."
   permissions = [
-    "privilegedaccessmanager.entitlements.create",
     "privilegedaccessmanager.entitlements.get",
     "privilegedaccessmanager.entitlements.list",
-    "privilegedaccessmanager.entitlements.update",
     "privilegedaccessmanager.grants.get",
     "privilegedaccessmanager.grants.list",
     "privilegedaccessmanager.grants.revoke",
-    "privilegedaccessmanager.operations.get",
-    "privilegedaccessmanager.operations.list",
   ]
 }
 

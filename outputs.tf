@@ -4,6 +4,6 @@ output "ci_pam_entitlement_name" {
 }
 
 output "target_sa_pam_grants_custom_role_name" {
-  description = "Fully-qualified project custom role name that grants PAM entitlement management and grant lifecycle actions to the target service account."
+  description = "Fully-qualified project custom role name that grants PAM grant request, read, and revoke operations to the target service account."
   value       = google_project_iam_custom_role.target_sa_pam_grants_manager.name
 }
