@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.4.0](https://github.com/datasciencecampus/tf-gcp-pam-ci-entitlement/compare/tf-gcp-pam-ci-entitlement-v1.3.0...tf-gcp-pam-ci-entitlement-v1.4.0) (2026-08-14)
+
+
+### Features
+
+* add notification option for PAM grants approval and activation ([60554fc](https://github.com/datasciencecampus/tf-gcp-pam-ci-entitlement/commit/60554fcbc29e9888c271c2266b1ffdd0fee71c2a))
+* Add notification option for PAM grants approval and activation ([6b3ffd2](https://github.com/datasciencecampus/tf-gcp-pam-ci-entitlement/commit/6b3ffd2cce6e9336c8ef7e7237ab3e98b27cc8fe))
+
 ## [1.3.0](https://github.com/datasciencecampus/tf-gcp-pam-ci-entitlement/compare/tf-gcp-pam-ci-entitlement-v1.2.0...tf-gcp-pam-ci-entitlement-v1.3.0) (2026-08-14)
 
 
