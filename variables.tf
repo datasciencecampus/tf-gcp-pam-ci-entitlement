@@ -63,6 +63,7 @@ variable "ci_pam_approver_principals" {
 variable "ci_pam_admin_notification_email_recipients" {
   description = "Additional email recipients to notify when PAM grants are approved and activated. Use for central mailbox routing (e.g. 'pam-alerts@example.gov.uk')."
   type        = list(string)
+  nullable    = false
   default     = []
   validation {
     condition = alltrue([
