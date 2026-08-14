@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.1.0](https://github.com/datasciencecampus/tf-gcp-pam-ci-entitlement/compare/tf-gcp-pam-ci-entitlement-v1.0.0...tf-gcp-pam-ci-entitlement-v1.1.0) (2026-08-14)
+
+
+### Features
+
+* add project-level custom role for PAM grant lifecycle actions ([6bc8e94](https://github.com/datasciencecampus/tf-gcp-pam-ci-entitlement/commit/6bc8e9452353ea53724f6715fde13eafb78cc293))
+* Create a custom PAM grant management role for target service account ([efac555](https://github.com/datasciencecampus/tf-gcp-pam-ci-entitlement/commit/efac555ab6f698ad61863fe6036a9311fc2321f0))
+
+
+### Documentation
+
+* update Google provider version in README ([50d4dab](https://github.com/datasciencecampus/tf-gcp-pam-ci-entitlement/commit/50d4dab0ac7bed523e11726a6595330d16bde211))
+* update links to terraform docs ([69628aa](https://github.com/datasciencecampus/tf-gcp-pam-ci-entitlement/commit/69628aae249bb759bb2bfce843dabf835d39d6d9))
+
 ## 1.0.0 (2026-08-13)
 
 
