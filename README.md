@@ -10,6 +10,7 @@ This is intended for CI pipelines (e.g. Cloud Build) that require short-lived, a
 2. The nominated CI service account is the only eligible requester.
 3. Elevated roles are granted for the duration of the build and revoked on completion.
 4. An optional approval step can be added for higher-assurance environments.
+5. A project-level custom role is created and assigned to the target service account for PAM grant lifecycle actions.
 
 ## Usage
 
@@ -20,6 +21,7 @@ module "ci_pam_entitlement" {
   project_id                   = "my-project-id"
   org_id                       = "123456789012"
   target_service_account_email = "terraform@my-project-id.iam.gserviceaccount.com"
+  target_sa_pam_grants_role_id = "pamGrantsManager"
 
   ci_pam_elevated_roles = [
     "roles/editor",
@@ -64,7 +66,9 @@ No modules.
 | Name | Type |
 | ---- | ---- |
 | [google_privileged_access_manager_entitlement.terraform_apply](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/privileged_access_manager_entitlement) | resource |
+| [google_project_iam_custom_role.target_sa_pam_grants_manager](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/project_iam_custom_role) | resource |
 | [google_project_iam_member.pam_service_agent](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/project_iam_member) | resource |
+| [google_project_iam_member.target_sa_pam_grants_manager](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/project_iam_member) | resource |
 
 ## Inputs
 
@@ -77,6 +81,7 @@ No modules.
 | <a name="input_ci_pam_require_approver_justification"></a> [ci\_pam\_require\_approver\_justification](#input\_ci\_pam\_require\_approver\_justification) | Whether approvers must supply a written justification when approving a PAM grant. | `bool` | `true` | no |
 | <a name="input_org_id"></a> [org\_id](#input\_org\_id) | Numeric Google Cloud organisation ID. Used to construct the PAM service agent identity. | `string` | n/a | yes |
 | <a name="input_project_id"></a> [project\_id](#input\_project\_id) | Google Cloud project ID for the environment. | `string` | n/a | yes |
+| <a name="input_target_sa_pam_grants_role_id"></a> [target\_sa\_pam\_grants\_role\_id](#input\_target\_sa\_pam\_grants\_role\_id) | Role ID for the project-level custom IAM role granting PAM grant lifecycle actions to the target service account. | `string` | `"pamGrantsManager"` | no |
 | <a name="input_target_service_account_email"></a> [target\_service\_account\_email](#input\_target\_service\_account\_email) | Email address of the target Terraform service account. This SA will be the eligible requester for JIT grants. | `string` | n/a | yes |
 
 ## Outputs
@@ -84,10 +89,12 @@ No modules.
 | Name | Description |
 | ---- | ----------- |
 | <a name="output_ci_pam_entitlement_name"></a> [ci\_pam\_entitlement\_name](#output\_ci\_pam\_entitlement\_name) | Fully-qualified PAM entitlement name. Set this as the \_PAM\_ENTITLEMENT\_NAME substitution variable in the Cloud Build apply trigger. |
+| <a name="output_target_sa_pam_grants_custom_role_name"></a> [target\_sa\_pam\_grants\_custom\_role\_name](#output\_target\_sa\_pam\_grants\_custom\_role\_name) | Fully-qualified project custom role name that grants PAM grant lifecycle actions to the target service account. |
 <!-- END_TF_DOCS -->
 
 ## Notes
 
-- Environment usage, assurance expectations, and data handling guidance are described in [docs/environment-guidance.md](docs/environment-guidance.md).
-- An empty `ci_pam_approver_principals` list enables auto-approval. This is only appropriate for sandbox environments.
-- The `ci_pam_entitlement_name` output should be set as the `_PAM_ENTITLEMENT_NAME` substitution variable in the Cloud Build trigger.
+- Environment usage, assurance expectations, and data handling guidance are described in this README.
+  - `privilegedaccessmanager.grants.create`
+  - `privilegedaccessmanager.grants.get`
+  - `privilegedaccessmanager.grants.revoke`
