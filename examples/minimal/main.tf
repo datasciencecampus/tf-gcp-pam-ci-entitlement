@@ -30,7 +30,7 @@ module "ci_pam_entitlement" {
 
   # Optional: notify a central mailbox when grants are approved and activated.
   ci_pam_admin_notification_email_recipients = [
-    "pam-alerts@example.gov.uk",
+    "pam-alerts@example.invalid",
   ]
 
   # No approvers: auto-approval enabled. Sandbox only.
