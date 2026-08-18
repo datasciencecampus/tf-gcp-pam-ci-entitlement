@@ -23,7 +23,7 @@ repos:
       - id: terraform_tflint
 
   - repo: https://github.com/bridgecrewio/checkov.git
-    rev: fb3e4ed6d57555820dbf7b1b02744a356333e2f1  # frozen: 3.3.10
+    rev: 5458c889320a19ccf2e2eed54beb4c661c70f67a  # frozen: 3.3.11
     hooks:
       - id: checkov
         args: [--config-file, ./configs/checkov.yml]
@@ -74,7 +74,7 @@ repos:
         stages: [commit-msg]
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: 7c55798a78262d14b2074abf623d8a992ebb70d4  # frozen: v0.16.2
+    rev: 65dbdb59d2f2d9c3bdc343c566821ad3319ddaa3  # frozen: v0.16.3
     hooks:
       - id: ruff
         args: [--fix, --config=./configs/ruff.toml]
