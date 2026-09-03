@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.5.0](https://github.com/datasciencecampus/tf-gcp-pam-ci-entitlement/compare/tf-gcp-pam-ci-entitlement-v1.4.0...tf-gcp-pam-ci-entitlement-v1.5.0) (2026-09-03)
+
+
+### Features
+
+* add workflows to manage issues and pull requests in projects ([9d74521](https://github.com/datasciencecampus/tf-gcp-pam-ci-entitlement/commit/9d7452102ba3bfe7e4e542909d3a1b47f3e3e9a9))
+* Add workflows to manage issues and pull requests in projects ([32bcad1](https://github.com/datasciencecampus/tf-gcp-pam-ci-entitlement/commit/32bcad10734921f993e4a3b2e993948ad0850e97))
+
 ## [1.4.0](https://github.com/datasciencecampus/tf-gcp-pam-ci-entitlement/compare/tf-gcp-pam-ci-entitlement-v1.3.0...tf-gcp-pam-ci-entitlement-v1.4.0) (2026-08-14)
 
 
