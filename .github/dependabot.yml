@@ -8,6 +8,7 @@ updates:
       day: "tuesday"
       time: "07:00"
       timezone: "Europe/London"
+    cooldown: 7
     labels:
       - "automation"
       - "pre-commit"
@@ -24,6 +25,7 @@ updates:
       day: "tuesday"
       time: "07:00"
       timezone: "Europe/London"
+    cooldown: 7
     labels:
       - "automation"
       - "github-action"
@@ -42,6 +44,7 @@ updates:
       day: "tuesday"
       time: "07:00"
       timezone: "Europe/London"
+    cooldown: 7
     groups:
       terraform-all:
         patterns:
