@@ -16,14 +16,14 @@ repos:
       - id: check-merge-conflict
 
   - repo: https://github.com/antonbabenko/pre-commit-terraform
-    rev: 253d99053f80e4a368175e93b36edb662e7e5135  # frozen: v1.109.1
+    rev: b9e409b0fee34ee0eee7e6f6a407061f15032926  # frozen: v1.109.5
     hooks:
       - id: terraform_fmt
       - id: terraform_validate
       - id: terraform_tflint
 
   - repo: https://github.com/bridgecrewio/checkov.git
-    rev: 8c0ddf99eabe4db75c739320274c7764866cd03d  # frozen: 3.3.19
+    rev: af20f73b3f9ef72c04c8a524ed41f6c5f39a3490  # frozen: 3.4.5
     hooks:
       - id: checkov
         args: [--config-file, ./configs/checkov.yml]
@@ -42,7 +42,7 @@ repos:
           )$
 
   - repo: https://github.com/terraform-docs/terraform-docs
-    rev: "4025989e4fd50bb33592d7a3a4cfb3b46de9367a"  # frozen: v0.24.0
+    rev: "d73141fa37317d84d924366385fb2a8552c0812b"  # frozen: v0.25.1
     hooks:
       - id: terraform-docs-go
         name: terraform-docs (module)
@@ -68,13 +68,13 @@ repos:
           - "examples/minimal"
 
   - repo: https://github.com/compilerla/conventional-pre-commit
-    rev: 3db014c16a9d31997ab8c07a4d61fcce936c8f0d  # frozen: v4.4.0
+    rev: 33b50eb042bee26eac0ee96ad84aa9c1b4dccdd8  # frozen: v4.5.0
     hooks:
       - id: conventional-pre-commit
         stages: [commit-msg]
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: a56c0b927e6465d37cae3e97d35d4d18ab2b96cd  # frozen: v0.16.9
+    rev: ef6cf06c079dd6b299dfc720b0f14400c9d168e1  # frozen: v0.17.5
     hooks:
       - id: ruff
         args: [--fix, --config=./configs/ruff.toml]
